@@ -1,0 +1,46 @@
+---
+- hosts: raspi
+  remote_user: pi
+  sudo: yes
+  tasks:
+  - name: install screen
+    apt:
+      pkg: screen
+  - name: copy temperature directory
+    synchronize: src=./temperature dest=/home/pi/
+  - name: chown temperature directory
+    file: path=/home/pi/temperature owner=pi group=pi
+  - name: clone adafruit library
+    git: repo=https://github.com/adafruit/Adafruit_Python_DHT.git dest=/home/pi/Adafruit_Python_DHT
+  - name: install build-essential
+    apt:
+      pkg: build-essential
+  - name: install python-dev
+    apt:
+      pkg: python-dev
+  - name: install pip
+    shell: sudo easy_install pip
+  - name: install adafruit library
+    shell:  sudo python setup.py install
+    args:
+      chdir: /home/pi/Adafruit_Python_DHT
+  - name: clone phant library #pip doens't seem to work
+    git: repo=https://github.com/matze/python-phant.git dest=/home/pi/python-phant
+  - name: install phant
+    shell: python setup.py install
+    args:
+      chdir: /home/pi/python-phant
+  - pip: name=numerous state=latest
+  # - pip: xively-python
+  # - name: install libffi
+  #   apt:
+  #     pkg: libffi-dev
+  # - name: install libssl-dev
+  #   apt:
+  #     pkg: libssl-dev
+  # - pip: oauth2client
+  # - name: install latest openssl
+  #   apt:
+  #     pkg: python-openssl
+  #     state: latest
+  # - pip: requests[security] #http://stackoverflow.com/a/29202163/1626687
