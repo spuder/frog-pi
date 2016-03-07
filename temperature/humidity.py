@@ -37,13 +37,13 @@ else:
 # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
 humidity, tempc = Adafruit_DHT.read_retry(sensor, pin)
 
-tempf = tempc * 9/5.0 + 32
 
 # Note that sometimes you won't get a reading and
 # the results will be null (because Linux can't
 # guarantee the timing of calls to read the sensor).
 # If this happens try again!
 if humidity is not None and tempc is not None:
+	tempf = tempc * 9/5.0 + 32
 	print 'Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(tempc, humidity)
 	p.log(humidity, tempc, tempf)
 	current_humidity_1 = h1.read()
