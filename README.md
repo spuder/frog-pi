@@ -41,7 +41,7 @@ Then run the following
 sudo su -
 source /home/pi/temperature/secrets/numerousapi.sh
 source /home/pi/temperature/secrets/phantapi.sh
-python /home/pi/temperature/humidity.py 11 4
+python /home/pi/temperature/humidity.py 11 23
 ```
 
 ## Automatic startup
